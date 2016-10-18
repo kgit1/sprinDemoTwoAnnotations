@@ -1,6 +1,7 @@
 package com.luv2code.springdemo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 //@Component("thatSillyCoach")
@@ -16,7 +17,18 @@ public class TennisCoach implements Coach {
 	@Autowired
 	//to inject value directly we need only to put autowired annotation
 	//on our field, even on private without any setters
-	private HappyFortuneService3 fs3;
+	@Qualifier("happyFortuneService3")
+	//we have 3 implementations of FortunesService interface and no
+	//hint for spring here which to choose 
+	//so we use Qualifier annotation to give this hint
+	private FortuneService fs3;
+	
+	@Autowired(required=false)
+	//By default, the autowiring will fail whenever zero candidate beans are
+	//available; the default behavior is to treat annotated methods, 
+	//constructors, and fields as indicating required dependencies. 
+	//This behavior can be changed as demonstrated below.
+	private String name = "Bob";
 	
 	@Autowired
 	//scans spring container for a component that implements
@@ -38,7 +50,8 @@ public class TennisCoach implements Coach {
 
 	@Override
 	public String getDailyWorkout() {
-		return getClass().getSimpleName() + ": Practice your backhand volley";
+		return getClass().getSimpleName() + name 
+				+ ": Practice your backhand volley";
 	}
 
 
