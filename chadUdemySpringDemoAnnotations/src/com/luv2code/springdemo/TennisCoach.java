@@ -10,9 +10,13 @@ import org.springframework.stereotype.Component;
 //it will be simple class name but starts from lowercase - tennisCoach
 public class TennisCoach implements Coach {
 
-	//
 	private FortuneService fortuneService;
 	private FortuneService fs2;
+	
+	@Autowired
+	//to inject value directly we need only to put autowired annotation
+	//on our field, even on private without any setters
+	private HappyFortuneService3 fs3;
 	
 	@Autowired
 	//scans spring container for a component that implements
@@ -25,20 +29,23 @@ public class TennisCoach implements Coach {
 		this.fs2 = fs2;
 	}
 	
-	@Autowired
+	@Autowired	
+	//actually as long as method has annotation autowired - 
+	//it  can have any name, not only setter signature
 	public void setFortuneService(HappyFortuneService fortuneService) {
 		this.fortuneService = fortuneService;
 	}
 
 	@Override
 	public String getDailyWorkout() {
-		return "Practice your backhand volley";
+		return getClass().getSimpleName() + ": Practice your backhand volley";
 	}
 
 
 	@Override
 	public String getDailyFortune() {
-		return fortuneService.getFortune()+"\n"+fs2.getFortune();
+		return fortuneService.getFortune() + "\n" + fs2.getFortune()
+		 + "\n" + fs3.getFortune();
 	}
 
 }
