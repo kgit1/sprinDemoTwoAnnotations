@@ -23,6 +23,10 @@ public class TennisCoach implements Coach {
 	//so we use Qualifier annotation to give this hint
 	private FortuneService fs3;
 	
+	@Autowired
+	@Qualifier("happyFortuneService4")
+	private FortuneService fs4;
+	
 	@Autowired(required=false)
 	//By default, the autowiring will fail whenever zero candidate beans are
 	//available; the default behavior is to treat annotated methods, 
@@ -58,7 +62,8 @@ public class TennisCoach implements Coach {
 	@Override
 	public String getDailyFortune() {
 		return fortuneService.getFortune() + "\n" + fs2.getFortune()
-		 + "\n" + fs3.getFortune();
+		+ "\n" + fs3.getFortune()
+		+ "\n" + fs4.getFortune();
 	}
 
 }
