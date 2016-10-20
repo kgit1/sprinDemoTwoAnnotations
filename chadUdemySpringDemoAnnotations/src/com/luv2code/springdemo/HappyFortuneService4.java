@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -27,6 +29,15 @@ public class HappyFortuneService4 implements FortuneService {
 			return fortunes;
 		}
 		return fortunes;
+	}
+	
+	@PostConstruct
+	public void fortuneInitMethod(){
+		data = readFile("fortunes.txt");
+		int index = myRandom.nextInt(data.size());
+		System.out.println("==========PostConstruct inside fortune===========");
+		System.out.println("HappyFortuneService4 - " + data.get(index)); 
+		System.out.println("=================================================");
 	}
 
 	@Override
